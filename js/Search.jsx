@@ -7,7 +7,6 @@ class Search extends Component {
   state = {
     searchTerm: ""
   };
-
   handleSearchChange = event => {
     // don't change state directly
     this.setState({ searchTerm: event.target.value });
@@ -16,7 +15,7 @@ class Search extends Component {
     return (
       <div className="search">
         <header>
-          <h1>svideo</h1>
+          <h1>sVideo</h1>
           <input
             onChange={this.handleSearchChange}
             value={this.state.searchTerm}
@@ -25,9 +24,14 @@ class Search extends Component {
           />
         </header>
         <div>
-          {preload.shows.map(show => (
-            <ShowCard key={show.imdbID} show={show} />
-          ))}
+          {preload.shows
+            .filter(
+              show =>
+                `${show.title} ${show.description}`
+                  .toUpperCase()
+                  .indexOf(this.state.searchTerm.toUpperCase()) >= 0
+            )
+            .map(show => <ShowCard key={show.imdbID} show={show} />)}
         </div>
       </div>
     );
